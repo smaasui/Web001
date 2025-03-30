@@ -1,0 +1,20 @@
+name: Auto Commit
+on:
+  schedule:
+    - cron: "0 0 * * *"  # Runs daily at midnight UTC
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Update Stats
+        run: |
+          date > stats.md
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-bot"
+          git config --global user.email "bot@example.com"
+          git add stats.md
+          git commit -m "Auto-update stats"
+          git push
